@@ -41,3 +41,12 @@ python app.py
 
 # AWS ECS deployment (CI/CD)
 
+# UI Screenshot
+
+![Image of UI](https://github.com/nilaynarlawar/AWS_Flask_CRUD_Web_Application/blob/main/UI%20Screenshot.png)
+
+# References
+  * https://www.youtube.com/watch?v=PTZiDnuC86g&t=705s
+  * https://github.com/bradtraversy/flask_sqlalchemy_rest
+  * https://youtu.be/XTpLbBJTOM4
+  * https://codeloop.org/flask-crud-application-with-sqlalchemy/
