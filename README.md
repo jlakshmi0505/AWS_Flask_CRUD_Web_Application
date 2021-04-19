@@ -1,8 +1,28 @@
-# AWS_Flask_CRUD_Web_Application
+# AWS_Flask_CRUD_Web_Application (Continuous Deployment Pipeline)
+
+
+# Overview
+ The goal of this project is to put together everything (test automation,Docker, and GitHub Actions) to setup a Continuous Deployment pipeline.
+ 
+# Requirement covered
+  * Setting up a GitHub repository with web service to deploy.
+       * This web service is in Flask for this project.
+  * Describing the behavior of at least 1 feature in gherkin
+  * Write unit tests covering some happy path and failure scenario at minimum.
+  * Write a Dockerfile that builds the image for application.
+  * Write functional tests to test your feature(s).
+  * Configure GitHub actions to do the following:
+     * On push to the repo, build the code, run unit tests,and push image to ECR.
+     * Deploy the new version to dev environment in ECS
+     * Run functional tests against the updated service
+     * Deploy the new version to prod in ECS
+  * Changes should be seen in dev and prod.
+
 
 # Quick Start Using Pipenv
 
 ```
+
 # Activate venv
 $ pipenv shell
 
