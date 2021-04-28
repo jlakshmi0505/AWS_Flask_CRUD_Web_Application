@@ -18,6 +18,14 @@ class EmployeeSchema(ma.Schema):
 employee_schema = EmployeeSchema()
 employees_schema = EmployeeSchema(many=True)
 
+#Clean db
+@app.route('/employee/deleteAll', methods=['GET','POST'])
+def delete_all_records():
+    Employee.delete_all_records()
+    EmpSalary.delete_all_salary_records()
+    #flash("Employee added successfully!!")
+    return redirect(url_for('Index'))
+
 # Create a Employee
 @app.route('/employee/add', methods=['POST'])
 def add_employee():

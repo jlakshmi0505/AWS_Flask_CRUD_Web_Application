@@ -75,6 +75,14 @@ class Employee(BaseModel):
         employee.delete()
         return True
 
+    @staticmethod
+    def delete_all_records():
+        """Delete records """
+        emp_records = Employee.get_all_employees()
+        for emp_rec in emp_records:
+            emp_rec.delete()
+        return True
+
 # Employee  Salary Class/Model
 class EmpSalary(BaseModel):
     __tablename__ = "EmpSalary"
@@ -126,5 +134,13 @@ class EmpSalary(BaseModel):
         """Delete employee salary """
         employee_salary = EmpSalary.exists(id)
         employee_salary.delete()
+        return True
+
+    @staticmethod
+    def delete_all_salary_records():
+        """Delete all salary records """
+        emp_salary_records = EmpSalary.get_all_employees_salaries()
+        for emp_salary_rec in emp_salary_records:
+            emp_salary_rec.delete()
         return True
 
