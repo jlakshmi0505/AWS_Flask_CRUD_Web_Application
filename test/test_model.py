@@ -1,96 +1,49 @@
-from models import Employee
-from pytest import raises
-from models import EmpSalary
+import mock
 
+from models import Employee, EmpSalary
 
-def test_exists():
-    # Arrange
-
-    # Act
-
-    # Assert
-
-    return True
-
-def test_get_all_employees():
-    # Arrange
-
-    # Act
-
-    # Assert
-
-    return True
 
 def test_add_employee():
-    # Arrange
+    mock_employee = mock.Mock(spec=Employee)
+    mock_employee.add_employee.return_value = True
+    actual = mock_employee.add_employee('b', 'b@gmail.com', 'USA', 'Google')
+    assert actual
 
-    # Act
-
-    # Assert
-
-    return True
 
 def test_update_employee():
-    # Arrange
+    mock_employee = mock.Mock(spec=Employee)
+    mock_employee.update_employee.return_value = True
+    actual = mock_employee.update_employee(1, 'b1', 'b@gmail.com', 'USA-101', 'Facebook')
+    assert actual
 
-    # Act
-
-    # Assert
-
-    return True
 
 def test_delete_employee():
-    # Arrange
+    mock_employee = mock.Mock(spec=Employee)
+    mock_employee.delete_employee.return_value = True
+    actual = mock_employee.delete_employee(1)
+    assert actual
 
-    # Act
 
-    # Assert
+# ------------- Salary Unit test case ------------
 
-    return True
-
-#------------- Salary Unit test case ------------
-
-def test_exists_salary():
-    # Arrange
-
-    # Act
-
-    # Assert
-
-    return True
-
-def test_get_all_employees_salaries():
-    # Arrange
-
-    # Act
-
-    # Assert
-
-    return True
 
 def test_add_employee_salary():
-    # Arrange
+    mock_employee_salary = mock.Mock(spec=EmpSalary)
+    mock_employee_salary.add_employee_salary.return_value = True
+    actual = mock_employee_salary.add_employee_salary(1, "100", "USD", "Deposit", "Biweekly")
+    assert actual
 
-    # Act
-
-    # Assert
-
-    return True
 
 def test_update_employee_salary():
-    # Arrange
+    mock_employee_salary = mock.Mock(spec=EmpSalary)
+    mock_employee_salary.update_employee_salary.return_value = True
+    actual = mock_employee_salary.update_employee_salary(1, "500", "USD", "Deposit", "Biweekly")
+    assert actual
 
-    # Act
-
-    # Assert
-
-    return True
 
 def test_delete_employee_salary():
-    # Arrange
+    mock_employee_salary = mock.Mock(spec=EmpSalary)
+    mock_employee_salary.delete_employee_salary.return_value = True
+    actual = mock_employee_salary.delete_employee_salary(1)
+    assert actual
 
-    # Act
-
-    # Assert
-
-    return True

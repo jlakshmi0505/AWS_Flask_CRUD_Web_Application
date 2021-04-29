@@ -1,5 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
 from emp_app import db
+
+
 class BaseModel(db.Model):  # type: ignore # silences a mypy warning
 
     """
@@ -9,6 +11,7 @@ class BaseModel(db.Model):  # type: ignore # silences a mypy warning
 
     """
     __abstract__ = True
+
     def save(self, commit=True):
         """Persists a new model in database."""
         db.session.add(self)
@@ -25,6 +28,7 @@ class BaseModel(db.Model):  # type: ignore # silences a mypy warning
         if commit:
             db.session.commit()
 
+
 class Employee(BaseModel):
     __tablename__ = "Employee"
     id = db.Column(db.Integer, primary_key=True)
@@ -32,7 +36,6 @@ class Employee(BaseModel):
     email = db.Column(db.String(200), unique=True)
     addr = db.Column(db.String(200))
     cmpy = db.Column(db.String(200))
-
 
     def __init__(self, name, email, addr, cmpy):
         self.name = name
@@ -53,7 +56,7 @@ class Employee(BaseModel):
     @staticmethod
     def add_employee(name, email, addr, cmpy):
         """Add a new Employee type """
-        employee = Employee(name=name,email = email,addr=addr,cmpy=cmpy)
+        employee = Employee(name=name, email=email, addr=addr, cmpy=cmpy)
         employee.save()
         return True
 
@@ -83,6 +86,7 @@ class Employee(BaseModel):
             emp_rec.delete()
         return True
 
+
 # Employee  Salary Class/Model
 class EmpSalary(BaseModel):
     __tablename__ = "EmpSalary"
@@ -92,7 +96,6 @@ class EmpSalary(BaseModel):
     currency = db.Column(db.String(200))
     pay_type = db.Column(db.String(200))
     pay_cycle = db.Column(db.String(200))
-
 
     def __init__(self, emp_id, salary, currency, pay_type, pay_cycle):
         self.emp_id = emp_id
@@ -119,9 +122,9 @@ class EmpSalary(BaseModel):
         return True
 
     @staticmethod
-    def update_employee_salary(id, salary, currency, pay_type, pay_cycle):
+    def update_employee_salary(emp_id, salary, currency, pay_type, pay_cycle):
         """Update employee """
-        employee_salary = EmpSalary.exists(id)
+        employee_salary = EmpSalary.exists(emp_id)
         employee_salary.salary = salary
         employee_salary.currency = currency
         employee_salary.pay_type = pay_type
@@ -143,4 +146,3 @@ class EmpSalary(BaseModel):
         for emp_salary_rec in emp_salary_records:
             emp_salary_rec.delete()
         return True
-
