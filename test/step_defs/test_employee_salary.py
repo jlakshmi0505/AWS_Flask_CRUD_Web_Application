@@ -1,53 +1,64 @@
 import pytest
-import request
+import requests
 
-from pytest_bdd import scenarios, when, then, given, And
+from pytest_bdd import scenarios, when, then, given
 
-CALLING_CODE_API = ""
+CALLING_CODE_API = "http://127.0.0.1:5000/"
 
-scenarios('emp_app/tests/feature/employee_salaray.feature', example_converters= dict(employee_details=str, employee_salary_details =str,
-employee_updated_salary_details = str, row_id = str, emp_id = str,
-new_salary=str))
+scenarios('../feature/employee_salary.feature',
+          example_converters=dict(employee_details=str, employee_salary_details=str, emp_id=str))
+
+
+@given('Employee and Employee Salary table is empty')
+def empty_table():
+    response = requests.post(CALLING_CODE_API + '/employee/deleteAll')
+    assert response.status_code == 200
+
+
+@given('the Employee add API is queried with "<employee_details>"')
+def create_employee_response(employee_details):
+    data_list = [x.strip() for x in employee_details.split(',')]
+    get_empres = requests.get(CALLING_CODE_API + '/employee/getbyid/1')
+    if get_empres.content.decode('utf-8').encode('unicode_escape').decode() == '{}\\n':
+        data = {'name': data_list[0],
+                'email': data_list[1],
+                'addr': data_list[2],
+                'cmpy': data_list[3]}
+        response = requests.post(CALLING_CODE_API + '/employee/add', data=data)
+        return response
+    return get_empres
 
 
 @pytest.fixture
-@given('Employee and Employee Salary table is empty')
-
-
-
 @when('the Employee salary add API is queried with "<employee_salary_details>"')
 def create_employee_salary_response(employee_salary_details):
-    return response
-
-
-@when('the Employee delete API is queried with "<emp_id>"')
-def delete_employee_response(emp_id):
-    return response
-
-
-@when('the Employee salary update API is queried with "<employee_updated_salary_details>"')
-    def update_employee_salary_response(employee_updated_salary_details):
+    data_list = [x.strip() for x in employee_salary_details.split(',')]
+    get_empres = requests.get(CALLING_CODE_API + '/employee/salary/getbyid/1')
+    if get_empres.content.decode('utf-8').encode('unicode_escape').decode() == '{}\\n':
+        data = {'emp_id': data_list[0],
+                'salary': data_list[1],
+                'currency': data_list[2],
+                'pay_type': data_list[3],
+                'pay_cycle': data_list[4]}
+        response = requests.post(CALLING_CODE_API + '/employee/salary/add', data=data)
         return response
+    return get_empres
+
+@pytest.fixture
+@when('the Employee salary delete API is queried with "<emp_id>"')
+def delete_employee_salary_response(emp_id):
+    get_empres = requests.get(CALLING_CODE_API + '/employee/salary/getbyid/' + emp_id)
+    if get_empres.content.decode('utf-8').encode('unicode_escape').decode() == '{}\\n':
+        get_empres = requests.post(CALLING_CODE_API + '/employee/salary/delete/' + emp_id)
+        return get_empres
+    return get_empres
+
 
 @then('the response status code is 200')
-def response_code(create_employee_response):
-    assert create_employee_response.status_code == 200
+def response_code(create_employee_salary_response):
+    assert create_employee_salary_response.status_code == 200
 
 
-@And('the response shows the employee salary row id as "<row_id>"')
-def check_response_row_id(emp_id):
-    assert create_employee_response.row_id = row_id
-
-@And('Employee is created with "<employee_details>"')
-def create_employee(employee_details):
-    return create_employee_response(employee_details)
-
-@And('add Employee Salary with "<employee_salary_details>"')
-def create_employee_salary(employee_salary_details):
-    return response
-
-@And('the response shows the employee salary as "<new_salary>"')
-def employee_compay_check(new_salary):
-    assert update_employee_salary_response.new_salary == new_salary
-
-
+@then('the response status code for delete is 200')
+def response_code(delete_employee_salary_response):
+    assert delete_employee_salary_response.status_code == 200

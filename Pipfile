@@ -8,6 +8,11 @@ flask = "*"
 flask-sqlalchemy = "*"
 flask-marshmallow = "*"
 marshmallow-sqlalchemy = "*"
+beautifulsoup4 = "*"
+mock = "*"
+pytest = "*"
+pytest-bdd = "*"
+requests = "*"
 
 [dev-packages]
 

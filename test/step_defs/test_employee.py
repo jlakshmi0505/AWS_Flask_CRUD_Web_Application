@@ -1,48 +1,53 @@
 import pytest
-import request
+import requests
 
-from pytest_bdd import scenarios, when, then, given, And
+from pytest_bdd import scenarios, when, then, given
 
-CALLING_CODE_API = ""
 
-scenarios('emp_app/tests/feature/employee.feature', example_converters= dict(employee_details=str, employee_updated_details =str,
-emp_id = str, emp_company=str))
+CALLING_CODE_API = "http://127.0.0.1:5000/"
+
+scenarios('../feature/employee.feature',
+          example_converters=dict(employee_details=str, emp_id=str))
+
+saved_response = ""
+
+
+@given('Employee and Employee Salary table is empty')
+def empty_table():
+    response = requests.post(CALLING_CODE_API + '/employee/deleteAll')
+    assert response.status_code == 200
 
 
 @pytest.fixture
-@given('Employee and Employee Salary table is empty')
-
-
-
 @when('the Employee add API is queried with "<employee_details>"')
 def create_employee_response(employee_details):
-    return response
+    data_list = [x.strip() for x in employee_details.split(',')]
+    get_empres = requests.get(CALLING_CODE_API + '/employee/getbyid/1')
+    if get_empres.content.decode('utf-8').encode('unicode_escape').decode() == '{}\\n':
+        data = {'name': data_list[0],
+                'email': data_list[1],
+                'addr': data_list[2],
+                'cmpy': data_list[3]}
+        response = requests.post(CALLING_CODE_API + '/employee/add', data=data)
+        return response
+    return get_empres
 
 
+@pytest.fixture
 @when('the Employee delete API is queried with "<emp_id>"')
 def delete_employee_response(emp_id):
-    return response
+    get_empres = requests.get(CALLING_CODE_API + '/employee/getbyid/' + emp_id)
+    if get_empres.content.decode('utf-8').encode('unicode_escape').decode() == '{}\\n':
+        get_empres = requests.post(CALLING_CODE_API + '/employee/delete/' + emp_id + '/')
+        return get_empres
+    return get_empres
 
-
- @when('the Employee update API is queried with "<employee_updated_details>"')
- def update_employee_response(employee_updated_details):
-     return response
 
 @then('the response status code is 200')
 def response_code(create_employee_response):
     assert create_employee_response.status_code == 200
 
 
-@And('the response shows the employee id as "<emp_id>"')
-def check_response_emp_id(emp_id):
-    assert create_employee_response.emp_id = emp_id
-
-@And('Employee is created with "<employee_details>"')
-def create_employee(employee_details):
-    return create_employee_response(employee_details)
-
-@And('the response shows the employee company as "<emp_company>"')
-def employee_compay_check(emp_company):
-    assert update_employee_response.emp_cmpy == emp_company
-
-
+@then('the response status code for delete is 200')
+def response_code(delete_employee_response):
+    assert delete_employee_response.status_code == 200
