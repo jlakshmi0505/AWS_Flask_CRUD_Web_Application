@@ -1,5 +1,5 @@
-from flask_sqlalchemy import SQLAlchemy
 from emp_app import db
+from validate_model import ValidateModel
 
 
 class BaseModel(db.Model):  # type: ignore # silences a mypy warning
@@ -56,9 +56,10 @@ class Employee(BaseModel):
     @staticmethod
     def add_employee(name, email, addr, cmpy):
         """Add a new Employee type """
-        employee = Employee(name=name, email=email, addr=addr, cmpy=cmpy)
-        employee.save()
-        return True
+        if ValidateModel.validate_emp(name, email, addr, cmpy):
+            employee = Employee(name=name, email=email, addr=addr, cmpy=cmpy)
+            employee.save()
+            return True
 
     @staticmethod
     def update_employee(id, name, email, addr, cmpy):
@@ -85,6 +86,10 @@ class Employee(BaseModel):
         for emp_rec in emp_records:
             emp_rec.delete()
         return True
+
+    def validate_emp_params(name, email, addr, cmpy):
+        if name is not None:
+            return True
 
 
 # Employee  Salary Class/Model
@@ -117,9 +122,10 @@ class EmpSalary(BaseModel):
     @staticmethod
     def add_employee_salary(emp_id, salary, currency, pay_type, pay_cycle):
         """Add a new Employee salary """
-        employee_salary = EmpSalary(emp_id, salary, currency, pay_type, pay_cycle)
-        employee_salary.save()
-        return True
+        if ValidateModel.validate_sal(emp_id, salary, currency, pay_type, pay_cycle):
+            employee_salary = EmpSalary(emp_id, salary, currency, pay_type, pay_cycle)
+            employee_salary.save()
+            return True
 
     @staticmethod
     def update_employee_salary(emp_id, salary, currency, pay_type, pay_cycle):
