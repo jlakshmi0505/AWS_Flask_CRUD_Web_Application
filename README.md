@@ -57,6 +57,31 @@ python app.py
 
 # AWS ECS deployment (CI/CD)
 
+## STEPS To do through CLI:
+### Setup your AWS CLI
+* Go to [AWS docs](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html) and follow the instructions to install the AWS CLI on your operating system. Note: for Windows users in WSL, this will  be Linux.
+* Follow the instructions in the [configuration section]https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-quickstart.html) of the docs to get setup in AWS.
+
+### Build, tag, and push Docker image to ECR
+* Navigate to [ECR](https://us-west-2.console.aws.amazon.com/ecr/repositories?region=us-west-2)
+* Click on the ECR repository with your username on it.
+* Click on "View Push Commands" button on the top right.
+* Change directory in your terminal to the flask docker image you created.
+* Follow the instructions from the push commands to log into ECR then build, tag, and push your flask image.
+### Redeploy Application
+* Go to the Clusters page in ECS and navigate to the cluster with your username on it
+* Click on your service
+* Click Update on the top-right
+* Check the box labeled Force New Deployment.
+* Click Skip to Review at the bottom of the page
+* Click Update Service
+* Click View Service
+* Click on the Details tab
+* Click on the Target Group's name
+* When that target group show's healthy, your service is now reachable
+* Click on the Load Balancer
+* Copy its DNS name into your browser, and you should see your application landing page.
+
 # UI Screenshot
 
 ![Image of UI](https://github.com/nilaynarlawar/AWS_Flask_CRUD_Web_Application/blob/main/UI%20Screenshot.png)
