@@ -3,8 +3,7 @@ WORKDIR /
 COPY Pipfile Pipfile
 RUN pipenv shell
 RUN pipenv install
-RUN Create db
 RUN exit()
 EXPOSE 5000
-COPY ./
+COPY . /
 CMD ["python","app.py"]
