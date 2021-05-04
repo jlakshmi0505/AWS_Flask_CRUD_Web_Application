@@ -60,7 +60,7 @@ python app.py
 ## STEPS To do through CLI:
 ### Setup your AWS CLI
 * Go to [AWS docs](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html) and follow the instructions to install the AWS CLI on your operating system. Note: for Windows users in WSL, this will  be Linux.
-* Follow the instructions in the [configuration section]https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-quickstart.html) of the docs to get setup in AWS.
+* Follow the instructions in the [configuration section](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-quickstart.html) of the docs to get setup in AWS.
 
 ### Build, tag, and push Docker image to ECR
 * Navigate to [ECR](https://us-west-2.console.aws.amazon.com/ecr/repositories?region=us-west-2)
