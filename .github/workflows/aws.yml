@@ -6,11 +6,21 @@ on:
 name: Deploy to Amazon ECS
 
 jobs:
-  deploy:
+  build:
+    name: Testing with pytest
+    runs-on: ubuntu-latest
+    steps:
+    - name: unit test
+      run: |
+        pip install pytest
+        export PYTHONPATH=src
+        pytest
+        
+  deploy:      
     name: Deploy
     runs-on: ubuntu-latest
 
-    steps:
+    steps:    
     - name: Checkout
       uses: actions/checkout@v2
 
