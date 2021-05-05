@@ -13,7 +13,6 @@ jobs:
     - name: unit test
       run: |
         pip install pytest
-        export PYTHONPATH=AWS_Flask_CRUD_Web_Application
         pytest
         
   deploy:      
