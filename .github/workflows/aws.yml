@@ -3,18 +3,9 @@ on:
     branches:
       - main
 
-name: Deploy to Amazon ECS
+name: Test and Deploy to Amazon ECS
 
-jobs:
-  build:
-    name: Testing with pytest
-    runs-on: ubuntu-latest
-    steps:
-    - name: unit test
-      run: |
-        pip install pytest
-        pytest
-        
+jobs:        
   deploy:      
     name: Deploy
     runs-on: ubuntu-latest
