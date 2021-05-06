@@ -3,14 +3,14 @@ on:
     branches:
       - main
 
-name: Deploy to Amazon ECS
+name: Test and Deploy to Amazon ECS
 
-jobs:
-  deploy:
+jobs:        
+  deploy:      
     name: Deploy
     runs-on: ubuntu-latest
 
-    steps:
+    steps:    
     - name: Checkout
       uses: actions/checkout@v2
 
@@ -19,7 +19,7 @@ jobs:
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_ID }}
-        aws-region: us-east-2
+        aws-region: us-west-2
 
     - name: Login to Amazon ECR
       id: login-ecr
