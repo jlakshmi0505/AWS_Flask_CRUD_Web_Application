@@ -39,6 +39,7 @@ python app.py
   * GET   /employees
   * GET   /employee/getbyid/"id"
   * POST  /employee/update
+  
   * POST  /employee/delete/"id"/
   * POST  /employee/salary/add
   * POST  /employees/salaries
